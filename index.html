@@ -1,1 +1,210 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#171a17">
+<title>Your Food Brand | Fresh Meals</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f8f6f0;color:#252820;font-family:Arial,sans-serif;padding-bottom:85px}
+header{background:#171a17;color:white;padding:17px 18px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:18px;font-weight:800;letter-spacing:1px}
+.logo span{color:#f2a45e}
+.location{font-size:11px;color:#ddd;margin-top:5px}
+.profile{background:#f2a45e;color:#171a17;border:0;border-radius:50%;width:38px;height:38px;font-weight:bold}
+.hero{margin:15px;padding:25px 20px;background:linear-gradient(135deg,#282c24,#474a37);border-radius:22px;color:white;overflow:hidden}
+.hero small{color:#f2ad70;letter-spacing:2px}
+.hero h1{font-size:35px;line-height:1.15;margin:15px 0}
+.hero h1 span{color:#f2a45e}
+.hero p{font-size:13px;color:#ddd;line-height:1.6}
+.btn{background:#f2a45e;border:0;padding:13px 20px;border-radius:25px;font-weight:bold;margin-top:10px}
+.section{padding:15px}
+.heading{display:flex;justify-content:space-between;align-items:center}
+.heading h2{font-size:21px}
+.heading small{color:#b76c36}
+.categories{display:flex;gap:9px;overflow:auto;padding:8px 0}
+.categories button{white-space:nowrap;padding:10px 17px;border:1px solid #ddd6ca;border-radius:22px;background:white}
+.categories button.active{background:#242820;color:white}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:white;border-radius:17px;overflow:hidden;box-shadow:0 4px 16px #0000000b}
+.food{height:120px;display:grid;place-items:center;background:#eee5d5;font-size:57px}
+.card:nth-child(2) .food{background:#e1e9da}
+.card:nth-child(3) .food{background:#f1e6ca}
+.card:nth-child(4) .food{background:#e8e1ef}
+.info{padding:12px}
+.info small{color:#b76c36}
+.info h3{font-size:14px;margin:7px 0}
+.info p{font-size:10px;color:#777;min-height:25px}
+.price{display:flex;justify-content:space-between;align-items:center;font-weight:bold}
+.add{background:#292c24;color:white;border:0;border-radius:20px;padding:9px 13px}
+.banner{margin:15px;padding:22px;background:#292c24;color:white;border-radius:18px}
+.banner h2{color:#f2a45e}
+.banner p{font-size:12px;color:#ddd}
+nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:12px 4px;border-top:1px solid #eee;z-index:5}
+nav button{border:0;background:none;font-size:11px;color:#777}
+nav button span{display:block;font-size:21px;margin-bottom:4px}
+nav button.active{color:#c5753e;font-weight:bold}
+.cart{position:fixed;bottom:70px;left:12px;right:12px;background:#242820;color:white;padding:13px 16px;border-radius:13px;display:none;justify-content:space-between;align-items:center;z-index:4}
+.cart button{background:#f2a45e;border:0;border-radius:20px;padding:10px}
+.page{display:none;padding:18px}
+.page.show{display:block}
+input,select{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin:7px 0 14px;background:white}
+.primary{width:100%;background:#242820;color:white;border:0;padding:14px;border-radius:10px;font-weight:bold}
+.orderbox{background:white;padding:16px;border-radius:14px;margin:12px 0}
+footer{text-align:center;color:#999;font-size:10px;padding:20px}
+</style>
+</head>
+<body>
+
+<header>
+<div>
+<div class="logo"><span>✳</span> YOUR BRAND</div>
+<div class="location">⌖ Local delivery · 7–8 KM zone</div>
+</div>
+<button class="profile">U</button>
+</header>
+
+<div id="home">
+<section class="hero">
+<small>FRESHLY COOKED · LOCALLY DELIVERED</small>
+<h1>Ghar jaisa khana,<br><span>har din.</span></h1>
+<p>Fresh Tiffin and delicious Thaali. Your everyday meal, delivered with care.</p>
+<button class="btn" onclick="showPage('menu')">Explore Menu →</button>
+</section>
+
+<section class="section">
+<div class="heading"><h2>What are you craving?</h2></div>
+<div class="categories">
+<button class="active" onclick="filter('All',this)">All</button>
+<button onclick="filter('Tiffin',this)">Tiffin</button>
+<button onclick="filter('Thaali',this)">Thaali</button>
+</div>
+</section>
+
+<section class="section" id="food">
+<div class="heading"><h2>Popular Meals</h2><small>FRESH DAILY</small></div>
+<div class="grid" id="products"></div>
+</section>
+
+<section class="banner">
+<small>MONTHLY MEAL PLANS</small>
+<h2>Your meals, your schedule.</h2>
+<p>Choose Lunch, Dinner or Both. Flexible tiffin subscriptions.</p>
+<button class="btn" onclick="showPage('plans')">Explore Plans →</button>
+</section>
+</div>
+
+<div id="menu" class="page">
+<h2>Our Menu</h2>
+<p>Choose your favourite everyday meal.</p>
+<div class="grid" id="menuProducts"></div>
+</div>
+
+<div id="plans" class="page">
+<h2>Monthly Tiffin Plans</h2>
+<div class="orderbox">
+<h3>Customize your plan</h3>
+<label>Meal preference</label>
+<select id="meal">
+<option>Lunch</option><option>Dinner</option><option>Both</option>
+</select>
+<label>Plan duration</label>
+<select id="duration">
+<option>7 Days</option><option>15 Days</option><option>30 Days</option>
+</select>
+<label>Quantity per meal</label>
+<input type="number" id="quantity" value="1" min="1">
+<button class="primary" onclick="alert('Plan request feature will be connected in the next phase.')">Continue</button>
+</div>
+</div>
+
+<div id="orders" class="page">
+<h2>My Orders</h2>
+<div class="orderbox">Your order history will appear here after backend connection.</div>
+</div>
+
+<div id="cartPage" class="page">
+<h2>Your Cart</h2>
+<div id="cartItems"></div>
+<h3 id="total"></h3>
+<div class="orderbox">
+<label>Your name</label><input id="customer" placeholder="Enter your name">
+<label>Mobile number</label><input id="phone" type="tel" placeholder="10 digit mobile number">
+<label>Delivery address</label><input id="address" placeholder="Your full address">
+<button class="primary" onclick="checkout()">Place Order Request</button>
+</div>
+</div>
+
+<div class="cart" id="cart">
+<span id="cartCount">0 items</span>
+<button onclick="showPage('cartPage')">View Cart →</button>
+</div>
+
+<nav>
+<button class="active" onclick="showPage('home',this)"><span>⌂</span>Home</button>
+<button onclick="showPage('menu',this)"><span>☷</span>Menu</button>
+<button onclick="showPage('plans',this)"><span>▦</span>Plans</button>
+<button onclick="showPage('orders',this)"><span>▣</span>Orders</button>
+<button onclick="showPage('cartPage',this)"><span>🛍</span>Cart</button>
+</nav>
+
+<footer>YOUR BRAND · Fresh Food, Happy Life</footer>
+
+<script>
+const products=[
+{id:1,name:"Everyday Veg Tiffin",type:"Tiffin",price:69,emoji:"🍱",desc:"Roti, sabzi, dal and rice"},
+{id:2,name:"Classic Veg Thaali",type:"Thaali",price:119,emoji:"🍛",desc:"Roti, dal, 2 sabzi and rice"},
+{id:3,name:"Mini Thaali",type:"Thaali",price:89,emoji:"🥗",desc:"Light and satisfying meal"},
+{id:4,name:"Special Tiffin",type:"Tiffin",price:99,emoji:"🥘",desc:"A delicious daily special"}
+];
+let cart=[];
+function draw(filterType="All"){
+let html=products.filter(p=>filterType==="All"||p.type===filterType).map(p=>`
+<article class="card">
+<div class="food">${p.emoji}</div>
+<div class="info"><small>${p.type}</small><h3>${p.name}</h3>
+<p>${p.desc}</p><div class="price">₹${p.price}<button class="add" onclick="add(${p.id})">+ Add</button></div></div>
+</article>`).join("");
+document.getElementById("products").innerHTML=html;
+document.getElementById("menuProducts").innerHTML=html;
+}
+function filter(type,button){
+document.querySelectorAll(".categories button").forEach(b=>b.classList.remove("active"));
+button.classList.add("active");draw(type);
+}
+function add(id){
+let p=products.find(x=>x.id===id);
+let item=cart.find(x=>x.id===id);
+if(item)item.qty++;else cart.push({...p,qty:1});
+updateCart();
+}
+function updateCart(){
+let count=cart.reduce((s,x)=>s+x.qty,0);
+document.getElementById("cart").style.display=count?"flex":"none";
+document.getElementById("cartCount").innerText=count+" items added";
+document.getElementById("cartItems").innerHTML=cart.map(x=>`<div class="orderbox">${x.name} × ${x.qty} <b>₹${x.price*x.qty}</b></div>`).join("");
+document.getElementById("total").innerText="Total: ₹"+cart.reduce((s,x)=>s+x.price*x.qty,0);
+}
+function showPage(id,button){
+document.querySelectorAll("#home,.page").forEach(x=>x.style.display="none");
+document.getElementById(id).style.display=id==="home"?"block":"block";
+document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+if(button)button.classList.add("active");
+if(id==="cartPage")updateCart();
+window.scrollTo(0,0);
+}
+function checkout(){
+let name=document.getElementById("customer").value.trim();
+let phone=document.getElementById("phone").value.trim();
+let address=document.getElementById("address").value.trim();
+if(!name||!phone||!address||cart.length===0){alert("Please enter your details and add items to cart.");return;}
+if(!/^[0-9]{10}$/.test(phone)){alert("Enter a valid 10 digit mobile number.");return;}
+alert("Your order request form is ready. Online order saving will be connected with the backend in Phase 2.");
+}
+draw();
+</script>
+</body>
+</html>
+
